@@ -3,8 +3,7 @@ from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QTextEdit, QPush
     QVBoxLayout, QLineEdit, QLabel
 
 
-class QlineEdit:
-    pass
+
 
 
 class MainWindow(QWidget):
@@ -17,7 +16,8 @@ class MainWindow(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        self.show_words = QLabel()
+        words = "The way to get started is to quit talking and begin doing."
+        self.show_words = QLabel(words)
         layout.addWidget(self.show_words)
 
         self.input = QTextEdit()
