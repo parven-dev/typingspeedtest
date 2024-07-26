@@ -1,9 +1,7 @@
 import sys
+import random
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QTextEdit, QPushButton, \
     QVBoxLayout, QLineEdit, QLabel
-
-
-
 
 
 class MainWindow(QWidget):
@@ -12,17 +10,23 @@ class MainWindow(QWidget):
         self.setupUI()
         self.setWindowTitle("Typing Speed Checker")
 
+    def random_text_genrator(self):
+        word_file = []
+        random_word = random.randint(0, 6)
+        with open("para.txt") as file:
+            for item in file:
+                word_file.append(item)
+        return word_file[random_word]
+
     def setupUI(self):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        words = "The way to get started is to quit talking and begin doing."
-        self.show_words = QLabel(words)
+        self.show_words = QLabel(self.random_text_genrator())
         layout.addWidget(self.show_words)
 
         self.input = QTextEdit()
         self.input.setMinimumSize(500, 200)
-
         self.input.setStyleSheet("padding: 5px; margin: 0px;")
         layout.addWidget(self.input)
 
@@ -30,13 +34,25 @@ class MainWindow(QWidget):
         layout.addLayout(button_layout)
 
         self.start_button = QPushButton("Start")
+        self.start_button.clicked.connect(self.generate_text)
         button_layout.addWidget(self.start_button)
 
-        self.stop_button = QPushButton("Stop")
-        button_layout.addWidget(self.stop_button)
+        self.check_button = QPushButton("check")
+        self.check_button.clicked.connect(self.error_checker)
+        button_layout.addWidget(self.check_button)
 
-        self.new_text_button = QPushButton("New Text")
-        button_layout.addWidget(self.new_text_button)
+
+    def generate_text(self):
+        new_text = self.random_text_genrator()
+        self.show_words.setText(new_text)
+
+    def error_checker(self):
+        typed_data = self.input.toPlainText()
+        show = self.show_words.text()
+        if typed_data:
+            if typed_data == show:
+                print("all done")
+
 
 
 if __name__ == '__main__':
