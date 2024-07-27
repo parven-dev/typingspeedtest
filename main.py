@@ -33,9 +33,9 @@ class MainWindow(QWidget):
         button_layout = QHBoxLayout()
         layout.addLayout(button_layout)
 
-        self.start_button = QPushButton("Start")
-        self.start_button.clicked.connect(self.generate_text)
-        button_layout.addWidget(self.start_button)
+        self.next_button = QPushButton("Next")
+        self.next_button.clicked.connect(self.generate_text)
+        button_layout.addWidget(self.next_button)
 
         self.check_button = QPushButton("check")
         self.check_button.clicked.connect(self.error_checker)
@@ -49,10 +49,16 @@ class MainWindow(QWidget):
     def error_checker(self):
         typed_data = self.input.toPlainText()
         show = self.show_words.text()
-        if typed_data:
-            if typed_data == show:
-                print("all done")
+        word1 = typed_data.split()
+        word2 = show.split()
 
+        correct = []
+        wrong = []
+        for item, (word1, word2) in enumerate(zip(word1, word2)):
+            if word1 == word2:
+                correct.append(word1)
+            else:
+                wrong.append(word2)
 
 
 if __name__ == '__main__':
